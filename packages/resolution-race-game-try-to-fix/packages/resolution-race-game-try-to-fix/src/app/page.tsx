@@ -28,9 +28,9 @@ export default function ResolutionRacer() {
       const gameState = {
         score: 50,
         combo: 0,
-        speed: 1.0,
-        baseSpeed: 1.0,
-        maxSpeed: 3.0,
+        speed: 3.0,
+        baseSpeed: 3.0,
+        maxSpeed: 8.0,
         isPaused: false,
         isGameOver: false,
         isVictory: false,
@@ -212,7 +212,7 @@ export default function ResolutionRacer() {
         ctx.fillStyle = color;
         ctx.fillRect(0, 0, 2048, 1024);
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 280px Arial';
+        ctx.font = 'bold 500px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.shadowColor = '#000000';
@@ -259,7 +259,7 @@ export default function ResolutionRacer() {
         goodGate.add(goodTop);
 
         const goodTextPlane = new THREE.Mesh(
-          new THREE.PlaneGeometry(6, 2),
+          new THREE.PlaneGeometry(8, 3),
           new THREE.MeshBasicMaterial({ map: createTextTexture(goodText, '#00ff00'), transparent: true })
         );
         goodTextPlane.position.set(0, 3.8, 0.2);
@@ -307,7 +307,7 @@ export default function ResolutionRacer() {
         }
 
         const badTextPlane = new THREE.Mesh(
-          new THREE.PlaneGeometry(6, 2),
+          new THREE.PlaneGeometry(8, 3),
           new THREE.MeshBasicMaterial({ map: createTextTexture(badText, '#ff0000'), transparent: true })
         );
         badTextPlane.position.set(0, 3.5, 0.2);
@@ -877,6 +877,7 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
 
 
 
