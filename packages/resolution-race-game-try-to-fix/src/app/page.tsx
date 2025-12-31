@@ -831,9 +831,39 @@ export default function ResolutionRacer() {
                 }
             });
 
-            // Spawn gates
-            if (gates.length < 4) {
+            // Spawn gates aggressively
+            gameState.spawnTimer = (gameState.spawnTimer || 0) + deltaTime;
+            const spawnInterval = 100 + Math.random() * 200; // 100-300ms
+            
+            if (gameState.spawnTimer > spawnInterval) {
+                const rand = Math.random();
+                
+                // 80% chance for 3 rows
+                if (rand < 0.8) {
+                    spawnGates();
+                    setTimeout(() => spawnGates(), 50);
+                    setTimeout(() => spawnGates(), 100);
+                }
+                // 70% chance for 2 rows (if not 3)
+                else if (rand < 0.9) {
+                    spawnGates();
+                    setTimeout(() => spawnGates(), 50);
+                }
+                // 50% chance for 1 row
+                else if (rand < 0.95) {
+                    spawnGates();
+                }
+                
+                gameState.spawnTimer = 0;
+            }
+            
+            // Backup spawn if too few gates
+            if (gates.length < 3) {
                 spawnGates();
+            }
+            
+            // Spawn powerups occasionally
+            if (Math.random() > 0.99) {
                 spawnPowerup();
             }
 
@@ -866,4 +896,5 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
 
