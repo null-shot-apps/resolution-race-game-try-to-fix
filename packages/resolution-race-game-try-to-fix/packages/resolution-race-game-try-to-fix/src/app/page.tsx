@@ -28,9 +28,9 @@ export default function ResolutionRacer() {
       const gameState = {
         score: 50,
         combo: 0,
-        speed: 2.0,
-        baseSpeed: 2.0,
-        maxSpeed: 4.0,
+        speed: 1.0,
+        baseSpeed: 1.0,
+        maxSpeed: 3.0,
         isPaused: false,
         isGameOver: false,
         isVictory: false,
@@ -212,9 +212,13 @@ export default function ResolutionRacer() {
         ctx.fillStyle = color;
         ctx.fillRect(0, 0, 2048, 1024);
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 200px Arial';
+        ctx.font = 'bold 280px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
+        ctx.shadowColor = '#000000';
+        ctx.shadowBlur = 20;
+        ctx.shadowOffsetX = 5;
+        ctx.shadowOffsetY = 5;
         ctx.fillText(text, 1024, 512);
         return new THREE.CanvasTexture(canvas);
       }
@@ -873,6 +877,8 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
+
 
 
 
