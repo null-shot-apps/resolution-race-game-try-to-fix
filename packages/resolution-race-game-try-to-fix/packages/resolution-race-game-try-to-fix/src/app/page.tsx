@@ -28,9 +28,9 @@ export default function ResolutionRacer() {
       const gameState = {
         score: 50,
         combo: 0,
-        speed: 0.15,
-        baseSpeed: 0.15,
-        maxSpeed: 0.4,
+        speed: 0.4,
+        baseSpeed: 0.4,
+        maxSpeed: 1.0,
         isPaused: false,
         isGameOver: false,
         isVictory: false,
@@ -94,7 +94,7 @@ export default function ResolutionRacer() {
       scene.fog = new THREE.Fog(0x000033, 10, 200);
 
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.set(0, 8, 10);
+      camera.position.set(0, 12, 15);
       camera.lookAt(0, 0, -10);
 
       const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, antialias: true });
@@ -206,16 +206,16 @@ export default function ResolutionRacer() {
 
       function createTextTexture(text: string, color: string) {
         const canvas = document.createElement('canvas');
-        canvas.width = 512;
-        canvas.height = 256;
+        canvas.width = 1024;
+        canvas.height = 512;
         const ctx = canvas.getContext('2d')!;
         ctx.fillStyle = color;
-        ctx.fillRect(0, 0, 512, 256);
+        ctx.fillRect(0, 0, 1024, 512);
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 48px Arial';
+        ctx.font = 'bold 120px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(text, 256, 128);
+        ctx.fillText(text, 512, 256);
         return new THREE.CanvasTexture(canvas);
       }
 
@@ -255,10 +255,10 @@ export default function ResolutionRacer() {
         goodGate.add(goodTop);
 
         const goodTextPlane = new THREE.Mesh(
-          new THREE.PlaneGeometry(3, 1),
+          new THREE.PlaneGeometry(4, 1.5),
           new THREE.MeshBasicMaterial({ map: createTextTexture(goodText, '#00ff00'), transparent: true })
         );
-        goodTextPlane.position.set(0, 3, 0.2);
+        goodTextPlane.position.set(0, 3.5, 0.2);
         goodGate.add(goodTextPlane);
 
         goodGate.position.set(lanePositions[goodLane], 0, z);
@@ -303,10 +303,10 @@ export default function ResolutionRacer() {
         }
 
         const badTextPlane = new THREE.Mesh(
-          new THREE.PlaneGeometry(3, 1),
+          new THREE.PlaneGeometry(4, 1.5),
           new THREE.MeshBasicMaterial({ map: createTextTexture(badText, '#ff0000'), transparent: true })
         );
-        badTextPlane.position.set(0, 3, 0.2);
+        badTextPlane.position.set(0, 3.5, 0.2);
         badGate.add(badTextPlane);
 
         badGate.position.set(lanePositions[badLane], 0, z);
@@ -702,9 +702,12 @@ export default function ResolutionRacer() {
           meteor.position.y -= meteor.userData.velocity;
           meteor.position.z += gameState.speed;
           
-          if (meteor.position.y < 1 && 
-              Math.abs(meteor.position.z - carGroup.position.z) < 2 && 
-              Math.abs(meteor.position.x - carGroup.position.x) < 2) {
+          if (meteor.position.y < 1.5 && 
+              Math.abs(meteor.position.z - carGroup.position.z) < 3 && 
+              Math.abs(meteor.position.x - carGroup.position.x) < 2.5 &&
+              !meteor.userData.hit) {
+            
+            meteor.userData.hit = true;
             
             updateScore(-20);
             playSound('bad');
@@ -870,5 +873,6 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
 
 
