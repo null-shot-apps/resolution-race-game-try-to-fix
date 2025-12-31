@@ -29,8 +29,8 @@ export default function ResolutionRacer() {
         score: 50,
         combo: 0,
         speed: 6.0,
-        baseSpeed: 6.0,
-        maxSpeed: 12.0,
+        baseSpeed: 0.3,
+        maxSpeed: 0.8,
         isPaused: false,
         isGameOver: false,
         isVictory: false,
@@ -259,10 +259,16 @@ export default function ResolutionRacer() {
         goodGate.add(goodTop);
 
         const goodTextPlane = new THREE.Mesh(
-          new THREE.PlaneGeometry(12, 4),
-          new THREE.MeshBasicMaterial({ map: createTextTexture(goodText, '#00ff00'), transparent: true })
+          new THREE.PlaneGeometry(16, 6),
+          new THREE.MeshBasicMaterial({ 
+            map: createTextTexture(goodText, '#00ff00'), 
+            transparent: true,
+            depthTest: false,
+            depthWrite: false
+          })
         );
-        goodTextPlane.position.set(0, 6, 0.2);
+        goodTextPlane.position.set(0, 7, 0.5);
+        goodTextPlane.renderOrder = 999;
         goodGate.add(goodTextPlane);
 
         goodGate.position.set(lanePositions[goodLane], 0, z);
@@ -307,10 +313,16 @@ export default function ResolutionRacer() {
         }
 
         const badTextPlane = new THREE.Mesh(
-          new THREE.PlaneGeometry(12, 4),
-          new THREE.MeshBasicMaterial({ map: createTextTexture(badText, '#ff0000'), transparent: true })
+          new THREE.PlaneGeometry(16, 6),
+          new THREE.MeshBasicMaterial({ 
+            map: createTextTexture(badText, '#ff0000'), 
+            transparent: true,
+            depthTest: false,
+            depthWrite: false
+          })
         );
-        badTextPlane.position.set(0, 6, 0.2);
+        badTextPlane.position.set(0, 7, 0.5);
+        badTextPlane.renderOrder = 999;
         badGate.add(badTextPlane);
 
         badGate.position.set(lanePositions[badLane], 0, z);
@@ -605,7 +617,7 @@ export default function ResolutionRacer() {
 
         // Move gates
         gates.forEach((gate, index) => {
-          gate.position.z += gameState.speed;
+          gate.position.z += gameState.speed * deltaTime;
           
           // Check collision
           if (Math.abs(gate.position.z - carGroup.position.z) < 2 && 
@@ -651,7 +663,7 @@ export default function ResolutionRacer() {
 
         // Move powerups
         powerups.forEach((powerup, index) => {
-          powerup.position.z += gameState.speed;
+          powerup.position.z += gameState.speed * deltaTime;
           powerup.rotation.y += 0.05;
           
           if (Math.abs(powerup.position.z - carGroup.position.z) < 1.5 && 
@@ -670,7 +682,7 @@ export default function ResolutionRacer() {
 
         // Move gacha boxes
         gachaBoxes.forEach((box, index) => {
-          box.position.z += gameState.speed;
+          box.position.z += gameState.speed * deltaTime;
           box.rotation.y += 0.03;
           
           if (Math.abs(box.position.z - carGroup.position.z) < 1.5 && 
@@ -704,7 +716,7 @@ export default function ResolutionRacer() {
         // Move meteors
         meteors.forEach((meteor, index) => {
           meteor.position.y -= meteor.userData.velocity;
-          meteor.position.z += gameState.speed;
+          meteor.position.z += gameState.speed * deltaTime;
           
           if (meteor.position.y < 2 && meteor.position.y > 0 && 
               Math.abs(meteor.position.z - carGroup.position.z) < 4 && 
@@ -877,6 +889,7 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
 
 
 
