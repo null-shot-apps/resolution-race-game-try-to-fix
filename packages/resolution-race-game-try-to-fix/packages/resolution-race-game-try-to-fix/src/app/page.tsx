@@ -28,9 +28,9 @@ export default function ResolutionRacer() {
       const gameState = {
         score: 50,
         combo: 0,
-        speed: 3.0,
-        baseSpeed: 3.0,
-        maxSpeed: 8.0,
+        speed: 6.0,
+        baseSpeed: 6.0,
+        maxSpeed: 12.0,
         isPaused: false,
         isGameOver: false,
         isVictory: false,
@@ -93,7 +93,7 @@ export default function ResolutionRacer() {
       const scene = new THREE.Scene();
       scene.fog = new THREE.Fog(0x000033, 10, 200);
 
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
       camera.position.set(0, 15, 18);
       camera.lookAt(0, 0, -10);
 
@@ -206,25 +206,25 @@ export default function ResolutionRacer() {
 
       function createTextTexture(text: string, color: string) {
         const canvas = document.createElement('canvas');
-        canvas.width = 2048;
-        canvas.height = 1024;
+        canvas.width = 4096;
+        canvas.height = 2048;
         const ctx = canvas.getContext('2d')!;
+        // Transparent background
+        ctx.clearRect(0, 0, 4096, 2048);
         ctx.fillStyle = color;
-        ctx.fillRect(0, 0, 2048, 1024);
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 500px Arial';
+        ctx.font = 'bold 2000px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.shadowColor = '#000000';
-        ctx.shadowBlur = 20;
-        ctx.shadowOffsetX = 5;
-        ctx.shadowOffsetY = 5;
-        ctx.fillText(text, 1024, 512);
+        ctx.shadowBlur = 40;
+        ctx.shadowOffsetX = 10;
+        ctx.shadowOffsetY = 10;
+        ctx.fillText(text, 2048, 1024);
         return new THREE.CanvasTexture(canvas);
       }
 
       function spawnGates() {
-        const z = gameState.lastGateZ - 30;
+        const z = gameState.lastGateZ - 20;
         gameState.lastGateZ = z;
 
         const lanes = [0, 1, 2];
@@ -259,10 +259,10 @@ export default function ResolutionRacer() {
         goodGate.add(goodTop);
 
         const goodTextPlane = new THREE.Mesh(
-          new THREE.PlaneGeometry(8, 3),
+          new THREE.PlaneGeometry(12, 4),
           new THREE.MeshBasicMaterial({ map: createTextTexture(goodText, '#00ff00'), transparent: true })
         );
-        goodTextPlane.position.set(0, 3.8, 0.2);
+        goodTextPlane.position.set(0, 6, 0.2);
         goodGate.add(goodTextPlane);
 
         goodGate.position.set(lanePositions[goodLane], 0, z);
@@ -307,10 +307,10 @@ export default function ResolutionRacer() {
         }
 
         const badTextPlane = new THREE.Mesh(
-          new THREE.PlaneGeometry(8, 3),
+          new THREE.PlaneGeometry(12, 4),
           new THREE.MeshBasicMaterial({ map: createTextTexture(badText, '#ff0000'), transparent: true })
         );
-        badTextPlane.position.set(0, 3.5, 0.2);
+        badTextPlane.position.set(0, 6, 0.2);
         badGate.add(badTextPlane);
 
         badGate.position.set(lanePositions[badLane], 0, z);
@@ -877,6 +877,11 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
+
+
+
+
 
 
 
