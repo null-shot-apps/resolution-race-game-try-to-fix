@@ -144,9 +144,9 @@ export default function ResolutionRacer() {
         const gameState = {
             score: 50,
             combo: 0,
-            speed: 0.15,
-            baseSpeed: 0.15,
-            maxSpeed: 0.4,
+            speed: 1.5,
+            baseSpeed: 1.5,
+            maxSpeed: 4.0,
             isPaused: false,
             isGameOver: false,
             isVictory: false,
@@ -322,16 +322,16 @@ export default function ResolutionRacer() {
 
         function createTextTexture(text, color) {
             const canvas = document.createElement('canvas');
-            canvas.width = 512;
-            canvas.height = 256;
+            canvas.width = 2048;
+            canvas.height = 1024;
             const ctx = canvas.getContext('2d');
             ctx.fillStyle = color;
-            ctx.fillRect(0, 0, 512, 256);
+            ctx.fillRect(0, 0, 2048, 1024);
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 48px Arial';
+            ctx.font = 'bold 1000px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(text, 256, 128);
+            ctx.fillText(text, 1024, 512);
             return new THREE.CanvasTexture(canvas);
         }
 
@@ -896,5 +896,6 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
 
 
