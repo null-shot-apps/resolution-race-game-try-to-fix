@@ -331,7 +331,20 @@ export default function ResolutionRacer() {
             ctx.font = 'bold 700px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(text, 1024, 512);
+            
+            // Wrap text to 2 rows if too long (more than 15 characters)
+            if (text.length > 15) {
+                const words = text.split(' ');
+                const midPoint = Math.ceil(words.length / 2);
+                const line1 = words.slice(0, midPoint).join(' ');
+                const line2 = words.slice(midPoint).join(' ');
+                
+                ctx.fillText(line1, 1024, 312);
+                ctx.fillText(line2, 1024, 712);
+            } else {
+                ctx.fillText(text, 1024, 512);
+            }
+            
             return new THREE.CanvasTexture(canvas);
         }
 
@@ -870,6 +883,7 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
 
 
 
