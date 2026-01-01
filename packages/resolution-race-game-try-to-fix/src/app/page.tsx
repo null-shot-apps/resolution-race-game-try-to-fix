@@ -144,9 +144,9 @@ export default function ResolutionRacer() {
         const gameState = {
             score: 50,
             combo: 0,
-            speed: 1.5,
-            baseSpeed: 1.5,
-            maxSpeed: 4.0,
+            speed: 0.1875,
+            baseSpeed: 0.1875,
+            maxSpeed: 0.5,
             isPaused: false,
             isGameOver: false,
             isVictory: false,
@@ -896,6 +896,7 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
 
 
 
