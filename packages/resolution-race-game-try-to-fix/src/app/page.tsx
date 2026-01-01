@@ -328,7 +328,7 @@ export default function ResolutionRacer() {
             ctx.fillStyle = color;
             ctx.fillRect(0, 0, 2048, 1024);
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 1000px Arial';
+            ctx.font = 'bold 700px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText(text, 1024, 512);
@@ -374,7 +374,7 @@ export default function ResolutionRacer() {
                 new THREE.PlaneGeometry(3, 1),
                 new THREE.MeshBasicMaterial({ map: createTextTexture(goodText, '#00ff00'), transparent: true })
             );
-            goodTextPlane.position.set(0, 3, 0.2);
+            goodTextPlane.position.set(0, 5, 0);
             goodGate.add(goodTextPlane);
 
             goodGate.position.set(lanePositions[goodLane], 0, z);
@@ -422,7 +422,7 @@ export default function ResolutionRacer() {
                 new THREE.PlaneGeometry(3, 1),
                 new THREE.MeshBasicMaterial({ map: createTextTexture(badText, '#ff0000'), transparent: true })
             );
-            badTextPlane.position.set(0, 3, 0.2);
+            badTextPlane.position.set(0, 5, 0);
             badGate.add(badTextPlane);
 
             badGate.position.set(lanePositions[badLane], 0, z);
@@ -896,6 +896,9 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
+
+
 
 
 
