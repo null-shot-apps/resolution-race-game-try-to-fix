@@ -328,6 +328,9 @@ export default function ResolutionRacer() {
             ctx.fillStyle = color;
             ctx.fillRect(0, 0, 4096, 2048);
             ctx.fillStyle = '#ffffff';
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 20;
+            ctx.lineJoin = 'round';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             
@@ -377,19 +380,24 @@ export default function ResolutionRacer() {
                 if (bestSplit > 0) {
                     line1 = words.slice(0, bestSplit).join(' ');
                     line2 = words.slice(bestSplit).join(' ');
+                    ctx.strokeText(line1, 2048, 724);
                     ctx.fillText(line1, 2048, 724);
+                    ctx.strokeText(line2, 2048, 1324);
                     ctx.fillText(line2, 2048, 1324);
                 } else {
                     // Can't split nicely, use smallest font
                     ctx.font = 'bold 640px Arial';
+                    ctx.strokeText(text, 2048, 1024);
                     ctx.fillText(text, 2048, 1024);
                 }
             } else if (textWidth > maxWidth) {
                 // Still too wide, use smallest font
                 ctx.font = 'bold 640px Arial';
+                ctx.strokeText(text, 2048, 1024);
                 ctx.fillText(text, 2048, 1024);
             } else {
                 // Fits on one line at current font size
+                ctx.strokeText(text, 2048, 1024);
                 ctx.fillText(text, 2048, 1024);
             }
             
@@ -931,6 +939,7 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
 
 
 
