@@ -322,28 +322,28 @@ export default function ResolutionRacer() {
 
         function createTextTexture(text, color) {
             const canvas = document.createElement('canvas');
-            canvas.width = 2048;
-            canvas.height = 1024;
+            canvas.width = 4096;
+            canvas.height = 2048;
             const ctx = canvas.getContext('2d');
             ctx.fillStyle = color;
-            ctx.fillRect(0, 0, 2048, 1024);
+            ctx.fillRect(0, 0, 4096, 2048);
             ctx.fillStyle = '#ffffff';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             
-            const maxWidth = 1900;
+            const maxWidth = 3800;
             const words = text.split(' ');
             
-            // Determine base font size based on text characteristics
-            let fontSize = 500;
+            // Determine base font size based on text characteristics (doubled for 4K canvas)
+            let fontSize = 1000;
             
             // Single long words (12+ chars) need smaller font
             if (words.length === 1 && text.length >= 12) {
-                fontSize = 350;
+                fontSize = 700;
             }
             // 3+ word phrases need smaller font
             else if (words.length >= 3) {
-                fontSize = 380;
+                fontSize = 760;
             }
             
             ctx.font = 'bold ' + fontSize + 'px Arial';
@@ -351,8 +351,8 @@ export default function ResolutionRacer() {
             
             // If still too wide and has spaces, split into 2 lines
             if (textWidth > maxWidth && text.includes(' ')) {
-                // Use smaller font for split lines
-                fontSize = words.length >= 3 ? 350 : 400;
+                // Use smaller font for split lines (doubled for 4K)
+                fontSize = words.length >= 3 ? 700 : 800;
                 ctx.font = 'bold ' + fontSize + 'px Arial';
                 
                 let line1 = '';
@@ -377,20 +377,20 @@ export default function ResolutionRacer() {
                 if (bestSplit > 0) {
                     line1 = words.slice(0, bestSplit).join(' ');
                     line2 = words.slice(bestSplit).join(' ');
-                    ctx.fillText(line1, 1024, 362);
-                    ctx.fillText(line2, 1024, 662);
+                    ctx.fillText(line1, 2048, 724);
+                    ctx.fillText(line2, 2048, 1324);
                 } else {
                     // Can't split nicely, use smallest font
-                    ctx.font = 'bold 320px Arial';
-                    ctx.fillText(text, 1024, 512);
+                    ctx.font = 'bold 640px Arial';
+                    ctx.fillText(text, 2048, 1024);
                 }
             } else if (textWidth > maxWidth) {
                 // Still too wide, use smallest font
-                ctx.font = 'bold 320px Arial';
-                ctx.fillText(text, 1024, 512);
+                ctx.font = 'bold 640px Arial';
+                ctx.fillText(text, 2048, 1024);
             } else {
                 // Fits on one line at current font size
-                ctx.fillText(text, 1024, 512);
+                ctx.fillText(text, 2048, 1024);
             }
             
             return new THREE.CanvasTexture(canvas);
@@ -931,6 +931,9 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
+
+
 
 
 
