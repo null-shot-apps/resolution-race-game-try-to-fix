@@ -328,20 +328,52 @@ export default function ResolutionRacer() {
             ctx.fillStyle = color;
             ctx.fillRect(0, 0, 2048, 1024);
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 700px Arial';
+            ctx.font = 'bold 600px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             
-            // Wrap text to 2 rows if too long (more than 15 characters)
-            if (text.length > 15) {
+            // Check if text needs wrapping based on actual width
+            const maxWidth = 1900; // Leave margin
+            const textWidth = ctx.measureText(text).width;
+            
+            if (textWidth > maxWidth && text.includes(' ')) {
+                // Split into 2 lines at the best word boundary
                 const words = text.split(' ');
-                const midPoint = Math.ceil(words.length / 2);
-                const line1 = words.slice(0, midPoint).join(' ');
-                const line2 = words.slice(midPoint).join(' ');
+                let line1 = '';
+                let line2 = '';
+                let bestSplit = 0;
+                let minDiff = Infinity;
                 
-                ctx.fillText(line1, 1024, 312);
-                ctx.fillText(line2, 1024, 712);
+                // Find the split that creates most balanced lines
+                for (let i = 1; i < words.length; i++) {
+                    const testLine1 = words.slice(0, i).join(' ');
+                    const testLine2 = words.slice(i).join(' ');
+                    const width1 = ctx.measureText(testLine1).width;
+                    const width2 = ctx.measureText(testLine2).width;
+                    const diff = Math.abs(width1 - width2);
+                    
+                    if (width1 <= maxWidth && width2 <= maxWidth && diff < minDiff) {
+                        minDiff = diff;
+                        bestSplit = i;
+                    }
+                }
+                
+                if (bestSplit > 0) {
+                    line1 = words.slice(0, bestSplit).join(' ');
+                    line2 = words.slice(bestSplit).join(' ');
+                    ctx.fillText(line1, 1024, 362);
+                    ctx.fillText(line2, 1024, 662);
+                } else {
+                    // Can't split nicely, use smaller font
+                    ctx.font = 'bold 450px Arial';
+                    ctx.fillText(text, 1024, 512);
+                }
+            } else if (textWidth > maxWidth) {
+                // Single long word, use smaller font
+                ctx.font = 'bold 450px Arial';
+                ctx.fillText(text, 1024, 512);
             } else {
+                // Fits on one line
                 ctx.fillText(text, 1024, 512);
             }
             
@@ -883,6 +915,7 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
 
 
 
