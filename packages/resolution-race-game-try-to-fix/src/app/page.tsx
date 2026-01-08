@@ -328,17 +328,33 @@ export default function ResolutionRacer() {
             ctx.fillStyle = color;
             ctx.fillRect(0, 0, 2048, 1024);
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 500px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             
-            // Check if text needs wrapping based on actual width
-            const maxWidth = 1900; // Leave margin
-            const textWidth = ctx.measureText(text).width;
+            const maxWidth = 1900;
+            const words = text.split(' ');
             
+            // Determine base font size based on text characteristics
+            let fontSize = 500;
+            
+            // Single long words (12+ chars) need smaller font
+            if (words.length === 1 && text.length >= 12) {
+                fontSize = 350;
+            }
+            // 3+ word phrases need smaller font
+            else if (words.length >= 3) {
+                fontSize = 380;
+            }
+            
+            ctx.font = `bold ${fontSize}px Arial`;
+            let textWidth = ctx.measureText(text).width;
+            
+            // If still too wide and has spaces, split into 2 lines
             if (textWidth > maxWidth && text.includes(' ')) {
-                // Split into 2 lines at the best word boundary
-                const words = text.split(' ');
+                // Use smaller font for split lines
+                fontSize = words.length >= 3 ? 350 : 400;
+                ctx.font = `bold ${fontSize}px Arial`;
+                
                 let line1 = '';
                 let line2 = '';
                 let bestSplit = 0;
@@ -361,20 +377,19 @@ export default function ResolutionRacer() {
                 if (bestSplit > 0) {
                     line1 = words.slice(0, bestSplit).join(' ');
                     line2 = words.slice(bestSplit).join(' ');
-                    ctx.font = 'bold 450px Arial';
                     ctx.fillText(line1, 1024, 362);
                     ctx.fillText(line2, 1024, 662);
                 } else {
-                    // Can't split nicely, use smaller font
-                    ctx.font = 'bold 380px Arial';
+                    // Can't split nicely, use smallest font
+                    ctx.font = 'bold 320px Arial';
                     ctx.fillText(text, 1024, 512);
                 }
             } else if (textWidth > maxWidth) {
-                // Single long word, use smaller font
-                ctx.font = 'bold 380px Arial';
+                // Still too wide, use smallest font
+                ctx.font = 'bold 320px Arial';
                 ctx.fillText(text, 1024, 512);
             } else {
-                // Fits on one line
+                // Fits on one line at current font size
                 ctx.fillText(text, 1024, 512);
             }
             
@@ -916,6 +931,7 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
 
 
 
