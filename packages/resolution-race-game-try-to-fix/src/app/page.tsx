@@ -328,7 +328,7 @@ export default function ResolutionRacer() {
             ctx.fillStyle = color;
             ctx.fillRect(0, 0, 2048, 1024);
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 600px Arial';
+            ctx.font = 'bold 500px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             
@@ -361,16 +361,17 @@ export default function ResolutionRacer() {
                 if (bestSplit > 0) {
                     line1 = words.slice(0, bestSplit).join(' ');
                     line2 = words.slice(bestSplit).join(' ');
+                    ctx.font = 'bold 450px Arial';
                     ctx.fillText(line1, 1024, 362);
                     ctx.fillText(line2, 1024, 662);
                 } else {
                     // Can't split nicely, use smaller font
-                    ctx.font = 'bold 450px Arial';
+                    ctx.font = 'bold 380px Arial';
                     ctx.fillText(text, 1024, 512);
                 }
             } else if (textWidth > maxWidth) {
                 // Single long word, use smaller font
-                ctx.font = 'bold 450px Arial';
+                ctx.font = 'bold 380px Arial';
                 ctx.fillText(text, 1024, 512);
             } else {
                 // Fits on one line
@@ -915,6 +916,7 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
 
 
 
