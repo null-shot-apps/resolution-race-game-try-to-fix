@@ -103,6 +103,28 @@ export default function ResolutionRacer() {
             z-index: 150;
             display: none;
         }
+        #gatePopup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            font-weight: bold;
+            z-index: 160;
+            display: none;
+            text-align: center;
+            animation: popupFade 1.5s ease-out forwards;
+        }
+        @keyframes popupFade {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -80%) scale(1.5);
+            }
+        }
         #comboDisplay {
             position: absolute;
             top: 70px;
@@ -135,6 +157,7 @@ export default function ResolutionRacer() {
     <div id="comboDisplay">Combo: <span id="combo">0</span>x</div>
     <button id="pauseBtn">II</button>
     <div id="notification"></div>
+    <div id="gatePopup"></div>
     <div id="message"></div>
     <canvas id="gameCanvas"></canvas>
 
@@ -447,7 +470,7 @@ export default function ResolutionRacer() {
             goodGate.add(goodTextPlane);
 
             goodGate.position.set(lanePositions[goodLane], 0, z);
-            goodGate.userData = { type: 'good', lane: goodLane };
+            goodGate.userData = { type: 'good', lane: goodLane, text: goodText };
             scene.add(goodGate);
             gates.push(goodGate);
 
@@ -495,7 +518,7 @@ export default function ResolutionRacer() {
             badGate.add(badTextPlane);
 
             badGate.position.set(lanePositions[badLane], 0, z);
-            badGate.userData = { type: 'bad', lane: badLane };
+            badGate.userData = { type: 'bad', lane: badLane, text: badText };
             scene.add(badGate);
             gates.push(badGate);
         }
@@ -575,6 +598,28 @@ export default function ResolutionRacer() {
             setTimeout(() => {
                 notif.style.display = 'none';
             }, 2000);
+        }
+
+        function showGatePopup(gateName, points, isGood) {
+            const popup = document.getElementById('gatePopup');
+            const color = isGood ? '#00ff00' : '#ff0000';
+            const sign = isGood ? '+' : '';
+            
+            popup.innerHTML = '<div style="color: ' + color + '; text-shadow: 0 0 20px ' + color + ';">' + 
+                              gateName + '<br>' + 
+                              '<span style="font-size: 64px;">' + sign + points + '</span>' +
+                              '</div>';
+            popup.style.display = 'block';
+            
+            // Reset animation
+            popup.style.animation = 'none';
+            setTimeout(() => {
+                popup.style.animation = 'popupFade 1.5s ease-out forwards';
+            }, 10);
+            
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 1500);
         }
 
         function screenShake() {
@@ -782,17 +827,18 @@ export default function ResolutionRacer() {
                             gameState.combo++;
                             const points = 10 + (gameState.combo - 1) * 5;
                             const multiplier = gameState.bullRunActive ? 2 : 1;
-                            updateScore(points * multiplier);
+                            const totalPoints = points * multiplier;
+                            updateScore(totalPoints);
                             updateCombo();
                             playSound('good');
-                            showNotification('+' + (points * multiplier) + ' Points!', '#00ff00');
+                            showGatePopup(gate.userData.text, totalPoints, true);
                         } else if (gate.userData.type === 'bad') {
                             updateScore(-10);
                             gameState.combo = 0;
                             updateCombo();
                             playSound('bad');
                             screenShake();
-                            showNotification('-10 Points!', '#ff0000');
+                            showGatePopup(gate.userData.text, -10, false);
                         }
                     }
                 }
@@ -939,6 +985,12 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
+
+
+
+
+
 
 
 
