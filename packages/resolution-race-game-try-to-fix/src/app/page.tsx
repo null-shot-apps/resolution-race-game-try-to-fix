@@ -346,14 +346,14 @@ export default function ResolutionRacer() {
                 fontSize = 380;
             }
             
-            ctx.font = `bold ${fontSize}px Arial`;
+            ctx.font = 'bold ' + fontSize + 'px Arial';
             let textWidth = ctx.measureText(text).width;
             
             // If still too wide and has spaces, split into 2 lines
             if (textWidth > maxWidth && text.includes(' ')) {
                 // Use smaller font for split lines
                 fontSize = words.length >= 3 ? 350 : 400;
-                ctx.font = `bold ${fontSize}px Arial`;
+                ctx.font = 'bold ' + fontSize + 'px Arial';
                 
                 let line1 = '';
                 let line2 = '';
@@ -931,6 +931,7 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
 
 
 
