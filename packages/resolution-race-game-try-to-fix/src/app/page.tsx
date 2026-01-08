@@ -24,7 +24,7 @@ export default function ResolutionRacer() {
             box-sizing: border-box;
         }
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: var(--font-inter), 'Arial', sans-serif;
             overflow: hidden;
             background: #000;
         }
@@ -40,6 +40,7 @@ export default function ResolutionRacer() {
             color: #00ffff;
             font-size: 24px;
             font-weight: bold;
+            font-family: var(--font-inter);
             text-shadow: 0 0 10px #00ffff;
             z-index: 100;
         }
@@ -72,6 +73,7 @@ export default function ResolutionRacer() {
             color: #fff;
             font-size: 48px;
             font-weight: bold;
+            font-family: var(--font-inter);
             text-align: center;
             z-index: 200;
             text-shadow: 0 0 20px #00ffff;
@@ -81,6 +83,7 @@ export default function ResolutionRacer() {
             margin-top: 30px;
             padding: 15px 40px;
             font-size: 24px;
+            font-family: var(--font-inter);
             background: #00ff00;
             border: none;
             border-radius: 10px;
@@ -110,6 +113,7 @@ export default function ResolutionRacer() {
             transform: translate(-50%, -50%);
             font-size: 48px;
             font-weight: bold;
+            font-family: var(--font-open-sans);
             z-index: 160;
             display: none;
             text-align: center;
@@ -257,7 +261,7 @@ export default function ResolutionRacer() {
         signCtx.fillStyle = '#000033';
         signCtx.fillRect(0, 0, 1024, 256);
         signCtx.fillStyle = '#00ffff';
-        signCtx.font = 'bold 80px Arial';
+        signCtx.font = 'bold 80px Roboto, Arial';
         signCtx.textAlign = 'center';
         signCtx.textBaseline = 'middle';
         signCtx.fillText('NEW YEAR RESOLUTION', 512, 128);
@@ -372,14 +376,14 @@ export default function ResolutionRacer() {
                 fontSize = 760;
             }
             
-            ctx.font = 'bold ' + fontSize + 'px Arial';
+            ctx.font = 'bold ' + fontSize + 'px Roboto, Arial';
             let textWidth = ctx.measureText(text).width;
             
             // If still too wide and has spaces, split into 2 lines
             if (textWidth > maxWidth && text.includes(' ')) {
                 // Use smaller font for split lines (doubled for 4K)
                 fontSize = words.length >= 3 ? 700 : 800;
-                ctx.font = 'bold ' + fontSize + 'px Arial';
+                ctx.font = 'bold ' + fontSize + 'px Roboto, Arial';
                 
                 let line1 = '';
                 let line2 = '';
@@ -409,13 +413,13 @@ export default function ResolutionRacer() {
                     ctx.fillText(line2, 2048, 1324);
                 } else {
                     // Can't split nicely, use smallest font
-                    ctx.font = 'bold 640px Arial';
+                    ctx.font = 'bold 640px Roboto, Arial';
                     ctx.strokeText(text, 2048, 1024);
                     ctx.fillText(text, 2048, 1024);
                 }
             } else if (textWidth > maxWidth) {
                 // Still too wide, use smallest font
-                ctx.font = 'bold 640px Arial';
+                ctx.font = 'bold 640px Roboto, Arial';
                 ctx.strokeText(text, 2048, 1024);
                 ctx.fillText(text, 2048, 1024);
             } else {
@@ -985,6 +989,10 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
+
+
+
 
 
 

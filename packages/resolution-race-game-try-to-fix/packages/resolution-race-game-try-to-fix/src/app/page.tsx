@@ -212,7 +212,7 @@ export default function ResolutionRacer() {
         // Transparent background
         ctx.clearRect(0, 0, 4096, 2048);
         ctx.fillStyle = color;
-        ctx.font = 'bold 2000px Arial';
+        ctx.font = 'bold 2000px Roboto, Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.shadowColor = '#000000';
@@ -795,7 +795,7 @@ export default function ResolutionRacer() {
           box-sizing: border-box;
         }
         body {
-          font-family: 'Arial', sans-serif;
+          font-family: var(--font-inter), 'Arial', sans-serif;
           overflow: hidden;
           background: #000;
         }
@@ -811,6 +811,7 @@ export default function ResolutionRacer() {
           color: #00ffff;
           font-size: 24px;
           font-weight: bold;
+          font-family: var(--font-inter);
           text-shadow: 0 0 10px #00ffff;
           z-index: 100;
         }
@@ -843,6 +844,7 @@ export default function ResolutionRacer() {
           color: #fff;
           font-size: 48px;
           font-weight: bold;
+          font-family: var(--font-inter);
           text-align: center;
           z-index: 200;
           text-shadow: 0 0 20px #00ffff;
@@ -856,6 +858,7 @@ export default function ResolutionRacer() {
           color: #ff0000;
           font-size: 28px;
           font-weight: bold;
+          font-family: var(--font-open-sans);
           text-shadow: 0 0 10px #ff0000;
           z-index: 150;
           display: none;
@@ -867,6 +870,7 @@ export default function ResolutionRacer() {
           color: #ffff00;
           font-size: 20px;
           font-weight: bold;
+          font-family: var(--font-inter);
           text-shadow: 0 0 10px #ffff00;
           z-index: 100;
           display: none;
@@ -889,6 +893,8 @@ export default function ResolutionRacer() {
     </>
   );
 }
+
+
 
 
 
